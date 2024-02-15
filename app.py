@@ -36,7 +36,17 @@ def url_variables(name: str, age: int):
     else:
         return jsonify(message=f'Welcome {name}!, Nice to see you')
 
-#database
+
+# database
+
+class User(db.Model):
+    __tablename__= 'users'
+    id = Column(Integer,primary_key=True)
+    first_name = Column(String)
+    last_name = Column(String)
+    email = Column(String, unique=True)
+    password = Column(String)
+
 
 if __name__ == '__main__':
     app.run()
