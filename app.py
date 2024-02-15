@@ -90,7 +90,6 @@ def url_variables(name: str, age: int):
 
 
 # database
-
 class User(db.Model):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
