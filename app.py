@@ -53,9 +53,9 @@ class Planet(db.Model):
     planet_name = Column(String)
     planet_type = Column(String)
     home_star = Column(String)
-    mass= Column(String)
-    radius = Column(String)
-    distance = Column(String)
+    mass= Column(Float)
+    radius = Column(Float)
+    distance = Column(Float)
     
 
 
