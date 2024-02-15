@@ -9,6 +9,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'pl
 db = SQLAlchemy(app)
 
 
+@app.cli.command('db_create')
+def db_create():
+    db.create_all()
+    print('Database is created')
+
+
 @app.route('/')
 def hello_world():
     return jsonify(message='Hello World!')
@@ -40,23 +46,23 @@ def url_variables(name: str, age: int):
 # database
 
 class User(db.Model):
-    __tablename__= 'users'
-    id = Column(Integer,primary_key=True)
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
     first_name = Column(String)
     last_name = Column(String)
     email = Column(String, unique=True)
     password = Column(String)
 
+
 class Planet(db.Model):
-    __tablename__= 'planets'
+    __tablename__ = 'planets'
     planet_id = Column(Integer, primary_key=True)
     planet_name = Column(String)
     planet_type = Column(String)
     home_star = Column(String)
-    mass= Column(Float)
+    mass = Column(Float)
     radius = Column(Float)
     distance = Column(Float)
-    
 
 
 if __name__ == '__main__':
