@@ -15,6 +15,12 @@ def db_create():
     print('Database is created')
 
 
+@app.cli.command('db_drop')
+def dp_drop():
+    db.drop_all()
+    print('Database is drop')
+
+
 @app.route('/')
 def hello_world():
     return jsonify(message='Hello World!')
