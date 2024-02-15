@@ -21,6 +21,44 @@ def dp_drop():
     print('Database is drop')
 
 
+# adding the fake data of planets
+@app.cli.command('db_seed')
+def db_seed():
+    mercury = Planet(planet_name='Mercury',
+                     planet_type='Class D',
+                     home_star='sol',
+                     mass=3.234,
+                     radius=1524,
+                     distance=234)
+
+    venus = Planet(planet_name='Venus',
+                   planet_type='Class D',
+                   home_star='sol',
+                   mass=3.234,
+                   radius=1524,
+                   distance=234)
+
+    earth = Planet(planet_name='Earth',
+                   planet_type='Class D',
+                   home_star='sol',
+                   mass=3.234,
+                   radius=1524,
+                   distance=234)
+
+    db.session.add(mercury)
+    db.session.add(venus)
+    db.session.add(earth)
+
+    # adding a test user
+
+    test_user = User(first_name='abdullah',
+                     last_name='bin aftab',
+                     email='binaftaba@gmail.com',
+                     password='allah786')
+
+    db.session.add(test_user)
+
+
 @app.route('/')
 def hello_world():
     return jsonify(message='Hello World!')
