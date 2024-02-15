@@ -2,11 +2,14 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Float
 import os
+from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'planets.db')
+
 db = SQLAlchemy(app)
+ma = Marshmallow(app)
 
 
 @app.cli.command('db_create')
@@ -88,6 +91,11 @@ def url_variables(name: str, age: int):
     else:
         return jsonify(message=f'Welcome {name}!, Nice to see you')
 
+
+#creating class for marshmallow
+class UserSchema(ma.Schema)
+    class Meta:
+        fields=('id', 'firstname')
 
 # database
 class User(db.Model):
