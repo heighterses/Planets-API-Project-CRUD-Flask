@@ -95,7 +95,8 @@ def url_variables(name: str, age: int):
 @app.route('/planets', methods=['GET'])
 def planets_data():
     planets_db_data = Planet.query.all()
-    return jsonify(data=planets_db_data)
+    result = planets_schema.dump(planets_db_data)
+    return jsonify(papa=result)
 
 
 # creating class for marshmallow
@@ -108,6 +109,13 @@ class PlanetSchema(ma.Schema):
     class Meta:
         fields = ('planet_id', 'planet_name', 'planet_type',
                   'home_star', 'mass', 'radius', 'distance')
+
+
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
+
+planet_schema = PlanetSchema()
+planets_schema = PlanetSchema(many=True)
 
 
 # database
