@@ -92,10 +92,13 @@ def url_variables(name: str, age: int):
         return jsonify(message=f'Welcome {name}!, Nice to see you')
 
 
-#creating class for marshmallow
-class UserSchema(ma.Schema)
-    class Meta:
-        fields=('id', 'firstname')
+@app.route('/planets', methods=['GET'])
+def planets_data():
+    planets_db_data = Planet.query.all()
+    return jsonify(data=planets_db_data)
+
+
+# creating class for marshmallow
 
 # database
 class User(db.Model):
@@ -105,6 +108,9 @@ class User(db.Model):
     last_name = Column(String)
     email = Column(String, unique=True)
     password = Column(String)
+
+
+# planet
 
 
 class Planet(db.Model):
