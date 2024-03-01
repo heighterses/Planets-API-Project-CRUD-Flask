@@ -107,8 +107,13 @@ def register():
     else:
         first_name=request.form['first_name']
         last_name=request.form['last_name']
-
-
+        password=request.form['password']
+        user = User(first_name=first_name,
+                    last_name=last_name,
+                    password=password)
+        db.session.add(user)
+        db.session.commit()
+        return jsonify(message='Successfully adding new user')
 
 # creating class for marshmallow
 class UserSchema(ma.Schema):
