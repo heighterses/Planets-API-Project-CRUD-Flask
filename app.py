@@ -96,7 +96,18 @@ def url_variables(name: str, age: int):
 def planets_data():
     planets_db_data = Planet.query.all()
     result = planets_schema.dump(planets_db_data)
-    return jsonify(papa=result)
+    return jsonify(data=result)
+
+@app.route('register',methods=['POST'])
+def register():
+    email = request.form.['email']
+    test = User.query.filter_by(email=email).first()
+    if test:
+        return jsonify(message='email exist')
+    else:
+        first_name=request.form['first_name']
+        last_name=request.form['last_name']
+
 
 
 # creating class for marshmallow
