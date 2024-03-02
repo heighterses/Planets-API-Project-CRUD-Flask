@@ -9,6 +9,7 @@ from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'planets.db')
+app.config['JWT_SECRET_KEY'] = 'super-secret'
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -119,6 +120,23 @@ def register():
         db.session.add(user)
         db.session.commit()
         return jsonify(message='Successfully adding new user')
+
+@app.route('/login', methods=['POST'])
+def login_user():
+    if request.is_json:
+        email= request.json['email']
+        password = request.json['password']
+    else:
+        email = request.form['email']
+        password = request.form['password']
+
+    test = User.query.filter_by(email=email,password=password).first()
+
+    if test:
+        access_token = create_access_token(identity=email)
+        return jsonify(message='Successfully logged in', access_token=access_token)
+    else:
+        return jsonify(message='sorry, could not find an account')
 
 
 
