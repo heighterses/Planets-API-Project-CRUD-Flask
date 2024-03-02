@@ -10,6 +10,12 @@ app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'planets.db')
 app.config['JWT_SECRET_KEY'] = 'super-secret'
+app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
+app.config['MAIL_PORT'] = 2525
+app.config['MAIL_USERNAME'] = '9e3cf328f15ad4'
+app.config['MAIL_PASSWORD'] = 'e1cf6f1081f278'
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -137,6 +143,7 @@ def login_user():
         return jsonify(message='Successfully logged in', access_token=access_token)
     else:
         return jsonify(message='sorry, could not find an account')
+
 
 
 # creating class for marshmallow
