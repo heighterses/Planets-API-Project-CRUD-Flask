@@ -10,7 +10,7 @@ app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'planets.db')
 app.config['JWT_SECRET_KEY'] = 'super-secret'
-app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
+app.config['MAIL_SERVER'] = 'sandbox.smtp.mailtrap.io'
 app.config['MAIL_PORT'] = 2525
 app.config['MAIL_USERNAME'] = '9e3cf328f15ad4'
 app.config['MAIL_PASSWORD'] = 'e1cf6f1081f278'
@@ -20,6 +20,7 @@ app.config['MAIL_USE_SSL'] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 jwt = JWTManager(app)
+mail = Mail(app)
 
 
 @app.cli.command('db_create')
@@ -144,6 +145,19 @@ def login_user():
     else:
         return jsonify(message='sorry, could not find an account')
 
+
+@app.route('/fetch_password/<string:email>', methods=['GET'])
+def fetch_password(email: str):
+    user = User.query.filter_by(email=email).first()
+    if user:
+        msg = Message("password" + user.password,
+                      sender="abdullah@binmail.com"
+                      , recipients=[email])
+
+        mail.send(msg)
+        return jsonify(message='Password is sended')
+    else:
+        return jsonify("email does not exist")
 
 
 # creating class for marshmallow
