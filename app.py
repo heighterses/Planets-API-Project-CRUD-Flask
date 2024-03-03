@@ -160,6 +160,14 @@ def fetch_password(email: str):
         return jsonify("email does not exist")
 
 
+# @app.route('/planet_details/<int:planet_id>', methods=['GET'])
+# def planet_details(planet_id: int):
+#     planet = User.query.filter_by(planets_dat=planet_id).first()
+#     if planet:
+#         result = planet_schema.dump(planet)
+#         return jsonify(message=result)
+
+
 # creating class for marshmallow
 class UserSchema(ma.Schema):
     class Meta:
