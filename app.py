@@ -80,7 +80,7 @@ def hello_world():
     return jsonify(message='Hello World!')
 
 
-@app.route('/not found')
+@app.route('/not_found')
 def status_code():
     return jsonify(message='')
 
